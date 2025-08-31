@@ -8,6 +8,44 @@ Australia's multicultural communities often struggle to connect meaningfully acr
 
 **MateHub** (formerly Cohesion Pass) is an iOS app that gamifies cultural diversity at community events. By offering tangible discounts and rewards based on a user's Multicultural Diversity Index (MDI), we incentivize authentic cross-cultural connections and break down social barriers.
 
+### 📊 Dataset Attributions
+
+- **Core Dataset
+	- Scanlon Institute – Mapping Social Cohesion 2024
+	- Link: https://scanloninstitute.org.au/mapping-social-cohesion-2024
+	- Usage: Provides the baseline for social cohesion in Australia, including belonging, trust, discrimination, and attitudes to diversity.
+	- Integration: Data is extracted from report tables and transformed into CSV for analysis in MateHub. Serves as the foundation for the Cohesion Index.
+	- Attribution: Mapping Social Cohesion 2024 data © Scanlon Institute.
+
+- **Demographic Dataset
+	- Australian Bureau of Statistics – Permanent Migrants in Australia, 2021
+	- Link: https://www.abs.gov.au/statistics/people/people-and-communities/permanent-migrants-australia/2021
+	- Usage: Provides demographic context for MateHub, including age, gender, country of birth, and employment status of migrants. Used to simulate diverse user profiles and validate the Diversity Index (IDM) logic.
+	- Attribution: Data sourced from the Australian Bureau of Statistics, Permanent Migrants in Australia, 2021.
+
+- **Taxonomy Dataset
+	- SAcommunity – Thesaurus
+	- Link: https://sacommunity.org/thesaurus/
+	- Usage: Provides a taxonomy of community services and categories, helping classify events consistently (sports, culture, GLAM, civic, etc.) within the app.
+	- Attribution: Event categorisation supported by SAcommunity Thesaurus.
+
+## 🗂️ App Gallery
+
+### Main Interface
+| Profile & Achievements | Time Tracking Dashboard |
+|----------------------|------------------------|
+| ![Profile](Database/IMG_4083.png) | ![My Time](Database/IMG_4084.png) |
+
+### Bridge Building & Surveys  
+| Achievement Unlocked | Survey Interface |
+|---------------------|------------------|
+| ![Achievement](Database/IMG_4081.png) | ![Survey](Database/IMG_4080.png) |
+
+### Gamification & Impact
+| Impact Feedback | Bridge Details |
+|----------------|----------------|
+| ![Impact](Database/IMG_4082.png) | *Coming Soon* |
+
 ## 🎯 Key Features
 
 ### 🗺️ Interactive Event Map
@@ -56,54 +94,7 @@ Australia's multicultural communities often struggle to connect meaningfully acr
 - `ProfileView`: Badge gallery and user statistics
 - `TimeTrackingView`: Activity dashboard with charts
 - `EventListView`: Curated event discovery
-
-### Database Schema
-```sql
--- Core user profiles with diversity tracking
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
-    email TEXT UNIQUE,
-    cultural_backgrounds TEXT, -- JSON array
-    mdi_score REAL DEFAULT 0.0,
-    total_hours REAL DEFAULT 0.0,
-    events_attended INTEGER DEFAULT 0
-);
-
--- Community events with pricing and diversity incentives
-CREATE TABLE events (
-    id INTEGER PRIMARY KEY,
-    title TEXT NOT NULL,
-    description TEXT,
-    latitude REAL NOT NULL,
-    longitude REAL NOT NULL,
-    price REAL NOT NULL,
-    category TEXT,
-    date_time TIMESTAMP,
-    diversity_bonus_eligible BOOLEAN DEFAULT 1
-);
-
--- Achievement system for cultural bridge-building
-CREATE TABLE badges (
-    id INTEGER PRIMARY KEY,
-    name TEXT UNIQUE NOT NULL,
-    description TEXT,
-    icon_name TEXT,
-    unlock_criteria TEXT, -- JSON object
-    rarity TEXT CHECK(rarity IN ('common', 'rare', 'epic', 'legendary'))
-);
-
--- User achievement unlocks
-CREATE TABLE user_badges (
-    user_id INTEGER,
-    badge_id INTEGER,
-    unlocked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (user_id, badge_id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (badge_id) REFERENCES badges(id)
-);
-```
-
+- 
 ## 📱 Installation & Setup
 
 ### Prerequisites
@@ -143,7 +134,7 @@ The app includes a pre-populated database with:
 - Sample user profiles with varied cultural backgrounds
 - Historical event data for testing time tracking features
 
-## 🌈 Multicultural Diversity Index (MDI)
+## Multicultural Diversity Index (MDI)
 
 The MDI is MateHub's core algorithm that quantifies a user's cross-cultural engagement:
 
@@ -165,26 +156,6 @@ MDI = (Cultural_Backgrounds × 0.3) +
 - **Generational Bridge**: Mixed-age group participation
 - **Faith Bridge**: Interfaith community events
 - **Geographic Bridge**: Events across different suburbs/regions
-
-## 📊 Dataset Attributions
-
-### Event Data Sources
-- **Eventbrite API**: Community events across Melbourne, Sydney, Brisbane
-  - Integration: Real-time event fetching with cultural tagging
-  - Attribution: "Event data powered by Eventbrite"
-  
-- **Meetup.com**: Cultural and language exchange groups  
-  - Integration: Weekly sync of multicultural meetups
-  - Attribution: "Community groups sourced from Meetup"
-  
-- **Australian Bureau of Statistics**: Cultural diversity demographics
-  - Dataset: 2021 Census - Cultural Diversity in Australia
-  - Usage: MDI baseline calculations and regional cultural mapping
-  - Link: https://www.abs.gov.au/statistics/people/people-and-communities/cultural-diversity-australia/2021
-
-- **City Council Event Calendars**: Sydney, Melbourne, Brisbane official events
-  - Integration: Civic cultural celebration data
-  - Attribution: Respective city council open data portals
 
 ### Cultural Background Classifications
 Based on Australian Standard Classification of Cultural and Ethnic Groups (ASCCEG) 2019:
@@ -212,22 +183,7 @@ Based on Australian Standard Classification of Cultural and Ethnic Groups (ASCCE
 - Indigenous cultural protocols respected in all features
 - No stereotyping or cultural assumptions in UI/UX
 
-## 🗂️ App Gallery
 
-### Main Interface
-| Profile & Achievements | Time Tracking Dashboard |
-|----------------------|------------------------|
-| ![Profile](Database/IMG_4083.png) | ![My Time](Database/IMG_4084.png) |
-
-### Bridge Building & Surveys  
-| Achievement Unlocked | Survey Interface |
-|---------------------|------------------|
-| ![Achievement](Database/IMG_4081.png) | ![Survey](Database/IMG_4080.png) |
-
-### Gamification & Impact
-| Impact Feedback | Bridge Details |
-|----------------|----------------|
-| ![Impact](Database/IMG_4082.png) | *Coming Soon* |
 
 *Gallery showcases real user interfaces demonstrating cultural bridge-building achievements and community impact tracking*
 
@@ -240,8 +196,7 @@ Based on Australian Standard Classification of Cultural and Ethnic Groups (ASCCE
 - **Integration**: Partnership with local councils and cultural organizations
 
 ### Long-term Vision
-- **Cross-platform**: Android version with feature parity
-- **Global Expansion**: Adaptation for international multicultural communities  
+- **Cross-platform**: Android version with feature parity 
 - **Enterprise**: Corporate diversity training and team building tools
 - **Research**: Academic partnerships for social cohesion studies
 
@@ -276,4 +231,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **MateHub** - *Connecting cultures, building community, one bridge at a time* 🌏
 
-[Website](https://matehub.app) | [GitHub](https://github.com/GapolaniaDev/MateHub) | [Contact](mailto:gustavo@gapolania.dev)
+[GitHub](https://github.com/GapolaniaDev/MateHub) | [Contact](mailto:gustav0796@hotmail.com)
